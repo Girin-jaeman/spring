@@ -1,0 +1,7 @@
+diff a/.gitignore b/.gitignore	(rejected hunks)
+@@ -0,4 +0,5 @@
+ sts06/.classpath
+ sts06/.project
+ sts06/.springBeans
++sts06/src/test/resources/log4j.xml
+ sts06/src/main/resources/log4j.xml

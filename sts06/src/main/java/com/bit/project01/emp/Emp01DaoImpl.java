@@ -36,4 +36,37 @@ public class Emp01DaoImpl extends JdbcDaoSupport implements Emp01Dao{
 		
 	}
 
+	@Override
+	public Emp01Vo selectOne(int key) {
+		String sql="select * from emp01 where sabun=?";
+		return getJdbcTemplate().queryForObject(sql,rowMapper,key);
+	}
+
+	@Override
+	public void updateOne(int sabun, String name, int pay) {
+		String sql="update emp01 set name=?,pay=? where sabun=?";
+		getJdbcTemplate().update(sql,name,pay,sabun);
+		
+	}
+
+	@Override
+	public int deleteOne(int sabun) {
+		String sql="delete from emp01 where sabun=?";
+		return getJdbcTemplate().update(sql,sabun);
+	} 
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

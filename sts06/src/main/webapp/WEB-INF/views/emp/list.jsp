@@ -18,11 +18,14 @@
 			<th>금액</th>
 		</tr>
 		<c:forEach items="${list }" var="bean">
+		<c:url value="detail" var="one">
+			<c:param name="sabun" value="${bean.sabun }"/>
+		</c:url>
 		<tr>
-			<th>${bean.sabun }</th>
-			<th>${bean.name }</th>
-			<th>${bean.nalja }</th>
-			<th>${bean.pay }</th>
+			<th><a href="${one }">${bean.sabun }</a></th>
+			<th><a href="${one }">${bean.name }</a></th>
+			<th><a href="${one }">${bean.nalja }</a></th>
+			<th><a href="${one }">${bean.pay }</a></th>
 		</tr>
 	</c:forEach>	
 	</table>
