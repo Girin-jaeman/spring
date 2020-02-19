@@ -1,0 +1,12 @@
+.metadata/.plugins/org.eclipse.core.resources/.history/3c/607fc88eee52001a10bcf6140dad28a6
+.metadata/
+Servers/
+*.class
+.settings/
+.class
+target/
+sts06/.classpath
+sts06/.project
+sts06/.springBeans
+sts06/src/test/resources/log4j.xml
+sts06/src/main/resources/log4j.xml
