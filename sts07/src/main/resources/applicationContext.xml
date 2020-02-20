@@ -2,8 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<bean id="dataSource"
 	class="org.apache.commons.dbcp.BasicDataSource">
@@ -24,14 +26,47 @@
 	class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+<!-- 
+	<bean id="deptDao"  제이디비씨 이걸로했음!
+	class="com.bit.project002.dept.model.DeptDaoImpl1"/> -->
+<!-- 	
+	<bean id="sqlMapClient"
+	class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath://sqlMapConfig.xml"></property>
+	</bean>
+	
+	<bean id="sqlMapClientTemplate"
+ 	class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	 자동으로 트랜잭션처리해줌 
+	</bean>
+	 -->
+
+	<bean id="sqlSessionFactory"
+	class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+	</bean>
+	<bean id="sqlSession"
+	class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+
+	<bean id="transactionManager"
+	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	 <!--자동으로 트랜잭션처리해줌  -->
 
 	<bean id="deptDao"
-	class="com.bit.project002.dept.model.DeptDaoImpl1"/>
-	<!-- 
-	<mvc:annotation-driven></mvc:annotation-driven>
-	내부에 아래의 빈을 요청하는 코드가 있지만~ 뭔지 오류가 납니다요!
-	 -->
+	class="com.bit.project002.dept.model.DeptDaoImpl3"/> 
+	
+	<!--
+	<context:annotation-config></context:annotation-config>
+	 어노테이션을 인식하도록 하는 것! -->
+
 	<bean
 	class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean>
-	
+
 </beans>

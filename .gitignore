@@ -9,3 +9,8 @@ sts06/.classpath
 sts06/.project
 sts06/.springBeans
 
+*.eot
+*.svg
+*.ttf
+*.woff
+*.woff2

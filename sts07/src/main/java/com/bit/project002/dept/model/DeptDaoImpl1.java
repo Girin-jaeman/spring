@@ -39,4 +39,23 @@ public class DeptDaoImpl1 implements DeptDao {
 		return jdbcTemplate.query(sql, rowMapper);
 	}
 
+	@Override
+	public void insertOne(String dname, String loc) {
+		String sql="insert into dept01 (dname,loc) values (?,?)";
+		jdbcTemplate.update(sql,dname,loc);
+		
+	}
+
+	@Override
+	public DeptVo selectOne(int key) {
+		String sql="select * from dept01 where deptno=?";
+		return jdbcTemplate.queryForObject(sql, rowMapper,key);
+	}
+
+	@Override
+	public int updateOne(String dname, String loc, int deptno) {
+		String sql="update dept01 set dname=?,loc=? where deptno=?";
+		return jdbcTemplate.update(sql,dname,loc,deptno);
+	}
+
 }

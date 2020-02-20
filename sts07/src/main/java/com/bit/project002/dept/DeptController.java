@@ -4,22 +4,102 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.bit.project002.dept.model.DeptDao;
+import com.bit.project002.dept.model.entity.DeptVo;
 
 @Controller
 @RequestMapping("/dept/")
 public class DeptController {
 //	다오를 뷰로 보내야하니까!
-	DeptDao dao;
+
 	@Autowired
-	public void setDao(DeptDao dao) {
-		this.dao = dao;
-	}
+	DeptDao dao;
+
 
 	@RequestMapping("list")
 	public String list(Model model) {
 		model.addAttribute("list",dao.selectAll());
 		return "deptlist";
 	}
+	
+	@RequestMapping(value = {"add","insert"},method=RequestMethod.GET)
+	public String addForm(Model model) {
+		model.addAttribute("title","입력");
+		model.addAttribute("action","insert");
+		model.addAttribute("method","post");
+		return "deptForm"; 
+	}
+	
+	
+	
+	@RequestMapping(value="insert", method = RequestMethod.POST)
+	public String insert(String dname,String loc,Model model) {
+		if(dname.isEmpty()) {
+			model.addAttribute("bean",new DeptVo(0,dname,loc));
+			model.addAttribute("title","입력");
+			model.addAttribute("action","insert");
+			model.addAttribute("method","post");
+			model.addAttribute("btn1","입력");
+			
+			return "deptForm";
+		}
+		dao.insertOne(dname,loc);
+		return "redirect:list";
+	}
+	
+	@RequestMapping("detail")
+	public String detail(int idx,Model model) {
+		model.addAttribute("bean",dao.selectOne(idx));
+		model.addAttribute("title","상세");
+		model.addAttribute("action","edit");
+		model.addAttribute("method","get");
+		model.addAttribute("disabled","disabled");
+		model.addAttribute("btn1","수정으로 이동");
+		return "deptForm";
+	}
+	
+	@RequestMapping(value="edit",method = RequestMethod.GET)
+	public String edit(int deptno,Model model) {
+		model.addAttribute("bean",dao.selectOne(deptno));
+		model.addAttribute("title","수정");
+		model.addAttribute("method","post");
+		model.addAttribute("btn1","수정");
+		//액션안주고 뷰 재사용하기위해서!
+		return "deptForm";
+	}
+	@RequestMapping(value="edit",method=RequestMethod.POST)
+	public String edit(int deptno,String dname,String loc,Model model) {
+		if(dname.isEmpty()) {
+			model.addAttribute("bean",new DeptVo(deptno,dname,loc));
+			model.addAttribute("title","수정");
+			model.addAttribute("method","post");
+			model.addAttribute("btn1","수정");
+			return "deptForm";
+		}
+			if(dao.updateOne(dname,loc,deptno)>0)
+				return "redirect:detail?idx="+deptno;
+		model.addAttribute("bean",dao.selectOne(deptno));
+		return "redirect:edit?deptno="+deptno;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

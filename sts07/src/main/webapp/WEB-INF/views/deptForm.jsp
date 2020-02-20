@@ -14,6 +14,15 @@
 	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
 </head>
 <body>
+<c:if test="${bean ne null}">
+	<c:if test="${bean.deptno==0}">
+		<div class="alert alert-danger alert-dismissible" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  <strong>ERROR!  </strong>  dname은 반드시 입력해야합니다. 
+		</div>
+	</c:if>
+</c:if>
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -58,35 +67,42 @@
 		<div class="jumbotron">
 		  <h1>DEPT TABLE</h1>
 		  <p>...</p>
-		  <p><a class="btn btn-primary btn-lg" href="add" role="button">입 력</a></p>
+		  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
 		</div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>DEPTNO</th>
-						<th>DNAME</th>
-						<th>LOC</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${list }" var="bean">
-					<c:url value="detail" var="alink">
-						<c:param name="idx" value="${bean.deptno }"/>
-					</c:url>
+		<h1>${title } 페이지</h1>
+				<form class="form-horizontal" action="${action }" method="${method }">
+					<c:if test="${title ne '입력' }"> 
+					<div class="form-group">
+						<label for="deptno" class="col-sm-2 control-label">DEPTNO</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="deptno" id="deptno" placeholder="DEPTNO" value="${bean.deptno }" readonly="readonly">
+						</div>
+					</div>
+					</c:if>
 					
-						<tr>
-							<td><a href="${alink}">${bean.deptno }</a></td>
-							<td><a href="${alink}">${bean.dname }</a></td>
-							<td><a href="${alink}">${bean.loc }</a></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
+					<div class="form-group">
+						<label for="dname" class="col-sm-2 control-label">DNAME</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="dname" id="dname" placeholder="DNAME" value="${bean.dname }" ${disabled}/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="loc" class="col-sm-2 control-label">LOC</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="loc" id="loc" placeholder="LOC" value="${bean.loc }" ${disabled}/>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-default">${btn1 }</button>
+						</div>
+					</div>
+				</form>
+			</div>
 	</div>
 </div>
 </body>
