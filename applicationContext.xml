@@ -1,3 +1,7 @@
+
+///aop 전에 쓴 방식 참고용
+///aop 전에 쓴 22
+///aop 전에 쓴 333
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -56,4 +60,4 @@ class="com.bit.sts12.service.EmpServiceImpl"></bean>
  <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>
 
-///aop 전에 쓴 
+
